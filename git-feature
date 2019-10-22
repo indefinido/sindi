@@ -2,8 +2,8 @@
 set -e
 
 # check to see if we are using a full-featured gitflow repo
-# xargs will automatically strip leading/trailing whitespace
-masterBranch=`git branch --list develop | head -1 | xargs`
+# there should never be more than one develop branch but be sure
+masterBranch=`git branch --list develop | head -1`
 if [[ -z "$masterBranch" ]] ; then
   masterBranch="master"
 fi
