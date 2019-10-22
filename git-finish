@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
-masterBranch="master"
+
+# check to see if we are using a full-featured gitflow repo
+# xargs will automatically strip leading/trailing whitespace
+masterBranch=`git branch --list develop | head -1 | xargs`
+if [[ -z "$masterBranch" ]] ; then
+  masterBranch="master"
+fi
 
 if [[ "$1" = "--h" ]] ; then
    echo "Finishing up feature and issue branches: ";
