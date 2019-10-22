@@ -2,10 +2,10 @@
 set -e
 
 # check to see if we are using a full-featured gitflow repo
-# there should never be more than one develop branch but be sure
-masterBranch=`git branch --list develop | head -1`
-if [[ -z "$masterBranch" ]] ; then
-  masterBranch="master"
+if git show-ref --quiet refs/heads/develop; then
+   masterBranch="develop"
+else
+   masterBranch="master"
 fi
 
 ((!$#)) && echo No feature name, command ignored! && echo "  - git feature <name>" && exit 1
@@ -24,5 +24,11 @@ if ! [ -d .git ] ; then
 	fi
 fi
 
-echo Starting feature $1
-git checkout -b feature/$1 $masterBranch
+
+if git show-ref --quiet refs/heads/feature/$1; then
+  echo Switching to existing feature $1
+  git checkout feature/$1
+else
+  echo Starting feature $1
+  git checkout -b feature/$1 $masterBranch
+fi
