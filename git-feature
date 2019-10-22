@@ -24,5 +24,11 @@ if ! [ -d .git ] ; then
 	fi
 fi
 
-echo Starting feature $1
-git checkout -b feature/$1 $masterBranch
+
+if git show-ref --quiet refs/heads/feature/$1; then
+  echo Switching to existing feature $1
+  git checkout feature/$1
+else
+  echo Starting feature $1
+  git checkout -b feature/$1 $masterBranch
+fi
