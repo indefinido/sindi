@@ -2,10 +2,10 @@
 set -e
 
 # check to see if we are using a full-featured gitflow repo
-# there should never be more than one develop branch but be sure
-masterBranch=`git branch --list develop | head -1`
-if [[ -z "$masterBranch" ]] ; then
-  masterBranch="master"
+if git show-ref --quiet refs/heads/develop; then
+   masterBranch="develop"
+else
+   masterBranch="master"
 fi
 
 if [[ "$1" = "--h" ]] ; then
