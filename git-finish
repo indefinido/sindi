@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+((!$#)) && echo No annotation, command ignored! You need to annotate the tag && echo "  - git finish <annotation>" && exit 1
+
 # check to see if we are using a full-featured gitflow repo
 if git show-ref --quiet refs/heads/develop; then
    masterBranch="develop"
